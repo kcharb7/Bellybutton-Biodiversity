@@ -27,7 +27,6 @@ function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
   buildMetadata(newSample);
   buildCharts(newSample);
-  
 }
 
 // Demographics Panel 
@@ -77,13 +76,13 @@ function buildCharts(sample) {
     // Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     // so the otu_ids with the most bacteria are last. 
-    var yticks = otuID.sort((a,b) => a.otuID-b.otuID).reverse().slice(0,10).map(bacteria => bacteria.otu_ids);
+    var yticks = otuID.slice(0,10).map(id => `OTU ${id}`).reverse();
     
     // Create the trace for the bar chart. 
     var barData = [{
-      x: sampleValues,
+      x: sampleValues.slice(0,10).reverse(),
       y: yticks,
-      text: otu_labels,
+      text: otuLabels,
       type: "bar", 
       orientation: "h"
     }];
@@ -92,7 +91,30 @@ function buildCharts(sample) {
     var barLayout = {
       title: "Top 10 Bacteria Cultures Found"
     };
+
     // Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
+
+    // Create the trace for the bubble chart.
+      var bubbleData = [{
+        x: otuID,
+        y: sampleValues,
+        text: otuLabels,
+        mode: 'markers',
+        marker: {
+          size: sampleValues,
+          color: otuID, 
+        }
+      }];
+    
+    // Create the layout for the bubble chart.
+      var bubbleLayout = {
+        title: "Bacteria Cultures Per Sample",
+        xaxis: {title: "OTU ID"},
+        hovermode: otuLabels
+      };
+    
+    // Use Plotly to plot the data with the layout.
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
   });
 }
