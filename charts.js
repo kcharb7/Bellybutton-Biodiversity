@@ -102,7 +102,8 @@ function buildCharts(sample) {
 
     // Create the layout for the bar chart. 
     var barLayout = {
-      title: "Top 10 Bacteria Cultures Found"
+      title: "Top 10 Bacteria Cultures Found", 
+      font: {family: "courier"}
     };
 
     // Use Plotly to plot the data with the layout. 
@@ -117,6 +118,7 @@ function buildCharts(sample) {
         marker: {
           size: sampleValues,
           color: otuID, 
+          colorscale: 'YlGnBu'
         }
       }];
     
@@ -124,7 +126,8 @@ function buildCharts(sample) {
       var bubbleLayout = {
         title: "Bacteria Cultures Per Sample",
         xaxis: {title: "OTU ID"},
-        hovermode: otuLabels
+        hovermode: otuLabels,
+        font: {family: "courier"}
       };
     
     // Use Plotly to plot the data with the layout.
@@ -140,11 +143,11 @@ function buildCharts(sample) {
         gauge: {
           axis: {range: [null, 10]},
           steps: [
-            {range: [0,2], color: "red"},
-            {range: [2,4], color: "orange"},
-            {range: [4,6], color: "yellow"},
-            {range: [6,8], color: "lightgreen"},
-            {range: [8,10], color: "green"}
+            {range: [0,2], color: "blue"},
+            {range: [2,4], color: "royalblue"},
+            {range: [4,6], color: "dodgerblue"},
+            {range: [6,8], color: "lightskyblue"},
+            {range: [8,10], color: "lightcyan"}
           ],
           bar: { color: "black" }
         },
@@ -154,10 +157,11 @@ function buildCharts(sample) {
       var gaugeLayout = { 
         width: 500,
         height: 400, 
-        margin: { t: 0, b: 0 }
+        margin: { t: 0, b: 0 },
+        font: {family: "courier"}
       };
     
     // Use Plotly to plot the gauge data and layout.
     Plotly.newPlot("gauge", gaugeData, gaugeLayout);
   });
-}
+};
